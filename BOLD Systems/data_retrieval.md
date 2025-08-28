@@ -22,7 +22,7 @@ https://portal.boldsystems.org/api/query/preprocessor?query=tax:Plantae
 Get a quick **summary** of which markers are available and how many records exist for each.
 
 ```bash
-https://portal.boldsystems.org/api/summary?query=tax:Plantae&fields=marker_code,specimens
+https://portal.boldsystems.org/api/summary?query=tax:kingdom:Plantae&fields=marker_code,specimens
 ```
 
 👉 Look for `"ITS"` in the `marker_code` column to confirm ITS records are present.
@@ -34,7 +34,7 @@ https://portal.boldsystems.org/api/summary?query=tax:Plantae&fields=marker_code,
 Generate a `query_id` token (valid for ~24 hours) that represents your dataset.
 
 ```bash
-https://portal.boldsystems.org/api/query?query=tax:Plantae&extent=full
+https://portal.boldsystems.org/api/query?query=tax:kingdom:Plantae&extent=full
 ```
 
 👉 Copy the `query_id` value from the JSON response.  
