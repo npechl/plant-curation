@@ -40,6 +40,11 @@ write.fasta(sequences = as.list(its1$nuc), names = as.list(its1$tax_header), fil
 write.fasta(sequences = as.list(its2$nuc), names = as.list(its2$tax_header), file.out = "r-curation/ITS2.fasta", nbchar = 120)
 write.fasta(sequences = as.list(trnl$nuc), names = as.list(trnl$tax_header), file.out = "r-curation/trnL.fasta", nbchar = 120)
 
+R.utils::gzip("./r-curation/ITS.fasta")
+R.utils::gzip("./r-curation/ITS1.fasta")
+R.utils::gzip("./r-curation/ITS2.fasta")
+R.utils::gzip("./r-curation/trnL.fasta")
+
 fwrite(its, "./r-curation/ITS.tax", sep = "\t", row.names = FALSE, quote = FALSE)
 fwrite(its1, "./r-curation/ITS1.tax", sep = "\t", row.names = FALSE, quote = FALSE)
 fwrite(its2, "./r-curation/ITS2.tax", sep = "\t", row.names = FALSE, quote = FALSE)
