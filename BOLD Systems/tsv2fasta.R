@@ -4,7 +4,6 @@
 
 library(data.table)
 library(stringr)
-
 library(seqinr)
 
 # input data ----------------------
@@ -19,36 +18,29 @@ df$nuc <- df$nuc |> str_remove_all("\\-")
 
 # split per marker ------------------
 
-its  <- df |> subset(marker_code == "ITS")
-its1 <- df |> subset(marker_code == "ITS1")
-its2 <- df |> subset(marker_code == "ITS2")
+its0 <- df |> subset(marker_code %in% c("ITS", "ITS1", "ITS2"))
 trnl <- df |> subset(marker_code == "trnL")
 
 # Make headers -----------------------
 
-its[, tax_header := paste0(record_id, "_", paste(kingdom, phylum, class, order, family, genus, species, sep = ";"))]
-its1[, tax_header := paste0(record_id, "_", paste(kingdom, phylum, class, order, family, genus, species, sep = ";"))]
-its2[, tax_header := paste0(record_id, "_", paste(kingdom, phylum, class, order, family, genus, species, sep = ";"))]
-trnl[, tax_header := paste0(record_id, "_", paste(kingdom, phylum, class, order, family, genus, species, sep = ";"))]
+its0[, tax_col := paste(kingdom, phylum, class, order, family, genus, species, sep = ";")]
+trnl[, tax_col := paste(kingdom, phylum, class, order, family, genus, species, sep = ";")]
 
 # workflow -----------------------
 
 dir.create("./r-curation", showWarnings = FALSE)
 
-write.fasta(sequences = as.list(its$nuc), names = as.list(its$tax_header), file.out = "r-curation/ITS.fasta", nbchar = 120)
-write.fasta(sequences = as.list(its1$nuc), names = as.list(its1$tax_header), file.out = "r-curation/ITS1.fasta", nbchar = 120)
-write.fasta(sequences = as.list(its2$nuc), names = as.list(its2$tax_header), file.out = "r-curation/ITS2.fasta", nbchar = 120)
-write.fasta(sequences = as.list(trnl$nuc), names = as.list(trnl$tax_header), file.out = "r-curation/trnL.fasta", nbchar = 120)
+write.fasta(sequences = as.list(its0$nuc), names = as.list(its0$processid), file.out = "r-curation/ITS0.fasta", nbchar = 120)
+write.fasta(sequences = as.list(trnl$nuc), names = as.list(trnl$processid), file.out = "r-curation/trnL.fasta", nbchar = 120)
 
-R.utils::gzip("./r-curation/ITS.fasta")
-R.utils::gzip("./r-curation/ITS1.fasta")
-R.utils::gzip("./r-curation/ITS2.fasta")
+R.utils::gzip("./r-curation/ITS0.fasta")
 R.utils::gzip("./r-curation/trnL.fasta")
 
-fwrite(its, "./r-curation/ITS.tax", sep = "\t", row.names = FALSE, quote = FALSE)
-fwrite(its1, "./r-curation/ITS1.tax", sep = "\t", row.names = FALSE, quote = FALSE)
-fwrite(its2, "./r-curation/ITS2.tax", sep = "\t", row.names = FALSE, quote = FALSE)
-fwrite(trnl, "./r-curation/trnL.tax", sep = "\t", row.names = FALSE, quote = FALSE)
+its0_tax <- its0[, .(processid, tax_col)]
+trnl_tax <- trnl[, .(processid, tax_col)]
+
+fwrite(its0_tax, "./r-curation/ITS0.tax", sep = "\t", row.names = FALSE, col.names = F, quote = FALSE)
+fwrite(trnl_tax, "./r-curation/trnL.tax", sep = "\t", row.names = FALSE, col.names = F, quote = FALSE)
 
 
 
