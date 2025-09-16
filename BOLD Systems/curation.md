@@ -35,7 +35,7 @@ This pipeline processes retrieved sequence data, curates it into marker-specific
    - Compress outputs  
 
 2. **ITS concatenation (optional)**  
-   - Merge ITS1, 5.8S, and ITS2 FASTA files into a single concatenated `full.ITS` file  
+   - Merge ITS1, 5.8S, and ITS2 FASTA files into a single concatenated `ITS` file  
 
 3. **Alignment & validation**  
    - Align curated FASTA with MAFFT  
@@ -46,25 +46,25 @@ This pipeline processes retrieved sequence data, curates it into marker-specific
 ## 🚀 Step-by-Step Instructions
 
 ### Step 1 – Data Curation in R 🧹
-Run the provided R script (`curation.R`) to filter raw data, remove missing/invalid entries, and generate curated FASTA + taxonomy files for ITS0 and trnL markers.
+Run the provided R script (`tsv2fasta.R`) to use the raw download file, remove missing/invalid entries, and generate curated FASTA + taxonomy files for ITS and trnL markers.
 
 ```bash
-Rscript curation.R
+Rscript tsv2fasta.R
 ```
 
 **Output files:**
-- `r-curation/ITS0.fasta.gz`  
-- `r-curation/trnL.fasta.gz`  
-- `r-curation/ITS0.tax`  
-- `r-curation/trnL.tax`  
+- `ITS.fasta.gz`  
+- `trnL.fasta.gz`  
+- `ITS.tax`  
+- `trnL.tax`  
 
 ---
 
 ### Step 2 – ITS Concatenation (Optional) 🔗
-Run the provided R script (`concatITS.R`) to concatenate ITS1, 5.8S, and ITS2 into a single sequence per sample.
+Run the provided R script (`construct_ITS_region.R`) to concatenate ITS1, 5.8S, and ITS2 into a single sequence per sample.
 
 ```bash
-Rscript concatITS.R
+Rscript construct_ITS_region.R
 ```
 
 **Output file:**
@@ -76,11 +76,11 @@ Rscript concatITS.R
 Align the curated FASTA (example for `trnL`):
 
 ```bash
-mafft --auto r-curation/trnL.fasta > r-curation/trnL_aligned.fasta
+mafft --auto trnL.fasta > trnL_aligned.fasta
 ```
 
 **Output file:**
-- `r-curation/trnL_aligned.fasta`
+- `trnL_aligned.fasta`
 
 ---
 
@@ -98,7 +98,7 @@ Run [SATIVA](https://github.com/amkozlov/sativa) on the aligned FASTA + taxonomy
 
 ## 📦 Outputs
 Final outputs include:
-- Curated FASTA + taxonomy tables (`r-curation/*.fasta.gz`, `r-curation/*.tax`)
+- Curated FASTA + taxonomy tables (`*.fasta.gz`, `*.tax`)
 - Optional concatenated ITS sequences (`*.full.ITS.fasta`)
 - Aligned FASTA (`*_aligned.fasta`)
 - SATIVA mislabel detection reports
