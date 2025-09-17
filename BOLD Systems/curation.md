@@ -60,7 +60,15 @@ Rscript tsv2fasta.R
 
 ---
 
-### Step 2 – ITS Concatenation (Optional) 🔗
+### Step 2 – Running ITSx
+
+Run **ITSx** on the input FASTA file to extract and save all ITS subregions using desired number of CPU cores:
+
+```bash
+ITSx -i ../r-curation/ITS0.fasta -o 250907 --cpu 6 --save_regions all
+```
+
+### Step 3 – ITS Concatenation (Optional) 🔗
 Run the provided R script (`construct_ITS_region.R`) to concatenate ITS1, 5.8S, and ITS2 into a single sequence per sample.
 
 ```bash
@@ -72,7 +80,7 @@ Rscript construct_ITS_region.R
 
 ---
 
-### Step 3 – Alignment with MAFFT 🧩
+### Step 4 – Alignment with MAFFT 🧩
 Align the curated FASTA (example for `trnL`):
 
 ```bash
@@ -84,7 +92,7 @@ mafft --auto trnL.fasta > trnL_aligned.fasta
 
 ---
 
-### Step 4 – Taxonomic Validation with SATIVA 🔍
+### Step 5 – Taxonomic Validation with SATIVA 🔍
 Run [SATIVA](https://github.com/amkozlov/sativa) on the aligned FASTA + taxonomy table:
 
 ```bash
@@ -104,6 +112,10 @@ Final outputs include:
 - SATIVA mislabel detection reports
 
 ---
+
+### Step 6 - Apply Sativa insights
+
+Run the provided R script (`apply_sativa.R`) to correct misclassifications.
 
 ## 💡 Notes & Tips
 - File names are flexible; update script paths accordingly.  
