@@ -65,7 +65,8 @@ Rscript tsv2fasta.R
 Run **ITSx** on the input FASTA file to extract and save all ITS subregions using desired number of CPU cores:
 
 ```bash
-ITSx -i ../r-curation/ITS0.fasta -o 250907 --cpu 6 --save_regions all
+ITSx -i {path/to/}ITS.fasta -o {output/folder/path} --cpu {number of threads} --save_regions all
+ITSx -i {path/to/}trnL.fasta -o {output/folder/path} --cpu {number of threads} --save_regions all
 ```
 
 ### Step 3 – ITS Concatenation (Optional) 🔗
@@ -76,7 +77,7 @@ Rscript construct_ITS_region.R
 ```
 
 **Output file:**
-- `*.full.ITS.fasta` (concatenated ITS sequences)
+- `full_ITS.fasta` (concatenated ITS sequences)
 
 ---
 
@@ -84,7 +85,8 @@ Rscript construct_ITS_region.R
 Align the curated FASTA (example for `trnL`):
 
 ```bash
-mafft --auto trnL.fasta > trnL_aligned.fasta
+mafft --auto full_ITS.fasta > full.ITS_aligned.fasta
+mafft --auto trnL_fasta > trnL_aligned.fasta
 ```
 
 **Output file:**
@@ -96,11 +98,16 @@ mafft --auto trnL.fasta > trnL_aligned.fasta
 Run [SATIVA](https://github.com/amkozlov/sativa) on the aligned FASTA + taxonomy table:
 
 ```bash
-../sativa.py -s r-curation/trnL_aligned.fasta              -t r-curation/trnL.tax              -T 2 -x bot -n syntest
+../sativa.py -s r-curation/full_ITS_aligned.fasta -t ITS.tax -T 2 -x bot -n output
+../sativa.py -s r-curation/trnL_aligned.fasta              -t trnL.tax -T 2 -x bot -n output
 ```
 
 **Output files:**
 - SATIVA result files (mislabels, reports, etc.)
+
+## Apply Sativa insights
+
+Run the provided R script (`apply_sativa.R`) to correct misclassifications, using sativa .mis output and original .tax file to update it.
 
 ---
 
@@ -108,14 +115,9 @@ Run [SATIVA](https://github.com/amkozlov/sativa) on the aligned FASTA + taxonomy
 Final outputs include:
 - Curated FASTA + taxonomy tables (`*.fasta.gz`, `*.tax`)
 - Optional concatenated ITS sequences (`*.full.ITS.fasta`)
-- Aligned FASTA (`*_aligned.fasta`)
 - SATIVA mislabel detection reports
 
 ---
-
-### Step 6 - Apply Sativa insights
-
-Run the provided R script (`apply_sativa.R`) to correct misclassifications.
 
 ## 💡 Notes & Tips
 - File names are flexible; update script paths accordingly.  
