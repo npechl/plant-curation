@@ -1,0 +1,72 @@
+# 📖 How to Download Plant ITS (or any other marker) Reference Barcodes from BOLD (Portal API)
+
+This guide shows how to fetch **ITS sequences of Plantae** using the **BOLD Portal API** in four clear steps.
+
+---
+
+## 🔹 Step 1. Preprocess the query
+
+Validate that your query is well-formed and recognized by BOLD.
+
+```bash
+https://portal.boldsystems.org/api/query/preprocessor?query=tax:Plantae
+```
+
+👉 You’ll see JSON confirming the query is valid.  
+*(Here we target all plants; you can later filter markers like ITS.)*
+
+---
+
+## 🔹 Step 2. Preview the dataset (optional but recommended)
+
+Get a quick **summary** of which markers are available and how many records exist for each.
+
+```bash
+https://portal.boldsystems.org/api/summary?query=tax:kingdom:Plantae&fields=marker_code,specimens
+```
+
+👉 Look for `"ITS"` in the `marker_code` column to confirm ITS records are present.
+
+---
+
+## 🔹 Step 3. Request a query ID
+
+Generate a `query_id` token (valid for ~24 hours) that represents your dataset.
+
+```bash
+https://portal.boldsystems.org/api/query?query=tax:kingdom:Plantae&extent=full
+```
+
+👉 Copy the `query_id` value from the JSON response.  
+*(Example: `"query_id":"2d3f4abc..."`)*
+
+---
+
+## 🔹 Step 4. Download the data
+
+Use the `query_id` to download the full dataset in your preferred format (TSV is most convenient).
+
+```bash
+https://portal.boldsystems.org/api/documents/<query_id>/download?format=tsv
+```
+
+Replace `<query_id>` with the token from Step 3.  
+
+👉 The TSV will contain **all markers** for Plantae.  
+
+Filter locally (e.g., in Excel, R, or Python) to keep only rows where:
+
+```
+marker_code == "ITS"
+```
+
+---
+
+# ✅ Summary
+
+1. **Preprocess** → validate your query.  
+2. **Summary** → preview marker availability.  
+3. **Query** → get a token (`query_id`).  
+4. **Download** → fetch the dataset and filter for ITS.  
+
+This method is scalable, avoids broken queries, and works for any group/marker by just editing the query string.
