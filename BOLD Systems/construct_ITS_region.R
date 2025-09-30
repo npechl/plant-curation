@@ -43,3 +43,4 @@ write.fasta(
     file.out = paste0(outdir, "/", db, ".full.ITS.fasta")
 )
 
+R.utils::gzip("./r-curation/trnL.fasta")
