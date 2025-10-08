@@ -36,10 +36,10 @@ write.fasta(sequences = as.list(trnl$nuc), names = as.list(trnl$processid), file
 R.utils::gzip("./r-curation/ITS0.fasta")
 R.utils::gzip("./r-curation/trnL.fasta")
 
-its0_tax <- its0[, .(processid, tax_col)]
+#its0_tax <- its0[, .(processid, tax_col)]
 trnl_tax <- trnl[, .(processid, tax_col)]
 
-fwrite(its0_tax, "./r-curation/ITS0.tax", sep = "\t", row.names = FALSE, col.names = F, quote = FALSE)
+#fwrite(its0_tax, "./r-curation/ITS0.tax", sep = "\t", row.names = FALSE, col.names = F, quote = FALSE)
 fwrite(trnl_tax, "./r-curation/trnL.tax", sep = "\t", row.names = FALSE, col.names = F, quote = FALSE)
 
 

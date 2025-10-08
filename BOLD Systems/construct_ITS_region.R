@@ -40,7 +40,6 @@ full_its <- concatITS(its1, s58, its2)
 
 write.fasta(
     full_its, names(full_its) |> as.list(), nbchar = 120, 
-    file.out = paste0(outdir, "/", db, ".full.ITS.fasta")
+    file.out = paste0(outdir, "/", db, ".ITS.fasta")
 )
 
-R.utils::gzip("./r-curation/trnL.fasta")
