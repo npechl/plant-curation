@@ -4,13 +4,12 @@ library(stringr)
 library(seqinr)
 
 # read fasta ------------------------------------------------
-fasta <- read.fasta("test.fasta.gz", as.string = T,whole.header = T)
+fasta <- read.fasta("test.fasta", as.string = T,whole.header = T)
 headers <- names(fasta)
 
 # parse headers --------------------------------------------------------------
 ids <- str_extract(headers, "^[^.]+")
 taxa <- str_replace(headers, "^[^.]+\\.[^_]*_", "")
-#taxa <- ifelse(taxa == headers, str_replace(headers, "^[^.]+\\.", ""), taxa)
 
 # combine and write ------------------------------------
 out <- data.table(id = ids, taxonomy = taxa)
