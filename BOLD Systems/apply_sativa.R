@@ -1,8 +1,8 @@
 library(data.table)
 
-tax_file <- "trnL.tax"
+tax_file <- "test.tax"
 mis_file <- "syntest.mis"
-out_file <- "trnL_corrected.tax"
+out_file <- "test_corrected.tax"
 
 tax <- fread(tax_file, header = F, sep = "\t")
 mis <- fread(mis_file, header = T, sep = "\t")

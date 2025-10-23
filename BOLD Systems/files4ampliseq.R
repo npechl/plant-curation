@@ -5,7 +5,7 @@ library(stringr)
 library(Biostrings)
 
 #------------------INPUT FILES----------------
-fasta_file <- "test.fasta.gz"
+fasta_file <- "test.fasta"
 tax_file   <- "test.tax"
 
 #---------------READ TAX FILE-------------------------
@@ -32,7 +32,7 @@ fasta_taxonomy <- merged %>%
 # Write fasta
 write_lines(
   paste0(">", fasta_taxonomy$header, "\n", fasta_taxonomy$sequence),
-  "taxonomy_headers.fasta"
+  "*toSpecies.fasta"
 )
 R.utils::gzip("taxonomy_headers.fasta")
 #-------------------FASTA 2: Sample ID + Species---------------------
@@ -48,6 +48,6 @@ fasta_species <- merged %>%
 # Write fasta
 write_lines(
   paste0(">", fasta_species$header, "\n", fasta_species$sequence),
-  "id_species.fasta"
+  "*assignSpecies.fasta"
 )
 R.utils::gzip("id_species.fasta")
