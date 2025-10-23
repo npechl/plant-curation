@@ -6,11 +6,13 @@ library(Biostrings)
 
 #------------------INPUT FILES----------------
 fasta_file <- "test.fasta"
-tax_file   <- "test.tax"
+tax_file <- "test.tax"
 
 #---------------READ TAX FILE-------------------------
-tax <- fread(tax_file, header = FALSE, sep = "\t", 
-             col.names = c("ID", "taxonomy"))
+tax <- fread(tax_file,
+  header = FALSE, sep = "\t",
+  col.names = c("ID", "taxonomy")
+)
 
 #-------------READ FASTA---------------------------------
 fasta <- readDNAStringSet(fasta_file)

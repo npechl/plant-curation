@@ -1,0 +1,14 @@
+name: plant-curation
+channels:
+- conda-forge
+- defaults
+- bioconda
+dependencies:
+- r-base
+- r-optparse
+- r-data.table
+- r-stringr
+- r-seqinr
+- r-r.utils
+- itsx
+- mafft
