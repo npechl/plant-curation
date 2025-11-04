@@ -4,6 +4,14 @@ This repository contains step-by-step markdown guides for curating plant DNA ref
 ## Overview
 The instructions describe how to collect, clean, and standardize plant sequence data from multiple public databases (such as **BOLD Systems**, ADD OTHERS). The curation process ensures that the final reference set is consistent, taxonomically valid, and ready for use in amplicon sequencing analyses.
 
+## Installation
+
+```bash
+git clone https://github.com/npechl/plant-curation.git
+```
+
+> Please follow instruction in each database-related sub folder.
+
 ## Contents
 
 - `environment.yml`: contains required software packages for processing
